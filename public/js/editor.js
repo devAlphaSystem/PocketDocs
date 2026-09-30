@@ -47,7 +47,12 @@
   var editorInstances = [];
 
   function sanitizeFileName(value) {
-    return String(value || "").trim().replace(/[<>:"/\\|?*\x00-\x1F]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^[-.]+|[-.]+$/g, "");
+    return String(value || "")
+      .trim()
+      .replace(/[<>:"/\\|?*\x00-\x1F]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^[-.]+|[-.]+$/g, "");
   }
 
   function resolveDownloadFileName(textarea, form) {
@@ -131,6 +136,7 @@
       var titleLabel = titleGroup ? titleGroup.querySelector("[data-content-item-title-label]") : null;
       var help = form.querySelector("[data-content-item-help]");
       var pageOnlyFields = form.querySelectorAll("[data-content-item-page-only]");
+      var headerOnlyFields = form.querySelectorAll("[data-content-item-header-only]");
       var submitButton = document.querySelector('[data-content-item-submit][form="' + form.id + '"]');
       var submitLabel = submitButton ? submitButton.querySelector("span") : null;
       var textarea = form.querySelector("textarea#content");
@@ -154,8 +160,12 @@
           field.hidden = !isPage;
         });
 
+        headerOnlyFields.forEach(function (field) {
+          field.hidden = !isHeader;
+        });
+
         if (help) {
-          help.textContent = isPage ? "A page contains documentation and can be opened from the public sidebar." : isHeader ? "A header is displayed as a non-clickable label in the public sidebar." : "A separator is displayed as a horizontal line in the public sidebar.";
+          help.textContent = isPage ? "A page contains documentation and can be opened from the public sidebar." : isHeader ? "A header groups pages in a collapsible section of the public sidebar." : "A separator is displayed as a horizontal line in the public sidebar.";
         }
 
         if (submitLabel) {

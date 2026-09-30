@@ -1,13 +1,23 @@
 <% const isProjectsSection = currentPath && currentPath.startsWith('/admin/projects'); %>
+
 <% const isUsersSection = currentPath && currentPath.startsWith('/admin/users'); %>
+
 <% const isSettingsSection = currentPath && currentPath.startsWith('/admin/settings'); %>
+
 <% const projectMatch = isProjectsSection ? currentPath.match(/^\/admin\/projects\/([^/]+)/) : null; %>
+
 <% const projectId = projectMatch && projectMatch[1] !== 'create' ? projectMatch[1] : null; %>
+
 <% const sidebarProjects = Array.isArray(projects) ? projects : []; %>
+
 <% const currentProject = project || null; %>
+
 <% const currentVersion = typeof version !== 'undefined' ? version : null; %>
+
 <% const currentContentSection = typeof section !== 'undefined' ? section : null; %>
+
 <% const contentSectionOptions = typeof sectionOptions !== 'undefined' && Array.isArray(sectionOptions) ? sectionOptions : []; %>
+
 <% const showContentSectionNav = Boolean(currentProject && currentVersion && contentSectionOptions.length); %>
 
 <% if (headerSearch && headerSearch.action) { %>
@@ -19,6 +29,7 @@
         <% } %>
       <% } %>
     <% } %>
+
     <input type="search" name="search" value="<%= headerSearch.value || '' %>" placeholder="<%= headerSearch.placeholder || 'Search...' %>" aria-label="Search">
   </form>
 <% } %>
@@ -26,6 +37,7 @@
 <nav class="sidebar-content">
   <% if (isProjectsSection) { %>
     <div class="sidebar-section-label">Projects</div>
+
     <% if (sidebarProjects.length) { %>
       <% for (const sidebarProject of sidebarProjects) { %>
         <a href="/admin/projects/<%= sidebarProject.id %>" class="sidebar-nav-link<%= projectId === sidebarProject.id ? ' active' : '' %>">
@@ -47,6 +59,7 @@
 
     <% if (showContentSectionNav) { %>
       <div class="sidebar-section-label">Content</div>
+
       <% for (const option of contentSectionOptions) { %>
         <a href="/admin/projects/<%= currentProject.id %>/versions/<%= currentVersion.id %>/pages?section=<%= option.value %>" class="sidebar-nav-link<%= option.value === currentContentSection ? ' active' : '' %>"<% if (option.value === currentContentSection) { %> aria-current="page"<% } %>>
           <i class="ph ph-<%= option.icon %>"></i>
@@ -56,12 +69,14 @@
     <% } %>
   <% } else if (isUsersSection) { %>
     <div class="sidebar-section-label">Access</div>
+
     <a href="/admin/users" class="sidebar-nav-link active">
       <i class="ph ph-users"></i>
       <span>Users</span>
     </a>
   <% } else if (isSettingsSection) { %>
     <div class="sidebar-section-label">System</div>
+
     <a href="/admin/settings" class="sidebar-nav-link active">
       <i class="ph ph-house"></i>
       <span>Application</span>
@@ -72,10 +87,10 @@
 <% if ((isProjectsSection && user && (user.role === 'owner' || user.role === 'admin')) || (isUsersSection && user && user.role === 'owner')) { %>
   <div class="sidebar-actions">
     <% if (isProjectsSection) { %>
-    <a href="/admin/projects/create" class="btn btn-sidebar btn-full" data-drawer-url="/admin/projects/create" data-drawer-title="New Project">
-      <i class="ph ph-plus"></i>
-      <span>New project</span>
-    </a>
+      <a href="/admin/projects/create" class="btn btn-sidebar btn-full" data-drawer-url="/admin/projects/create" data-drawer-title="New Project">
+        <i class="ph ph-plus"></i>
+        <span>New project</span>
+      </a>
     <% } else { %>
       <button type="button" class="btn btn-sidebar btn-full" data-dialog-open="createUserModal">
         <i class="ph ph-plus"></i>

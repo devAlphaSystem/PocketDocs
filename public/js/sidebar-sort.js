@@ -255,17 +255,19 @@
         "X-CSRF-Token": csrfToken,
       },
       body: JSON.stringify({ pages: pages }),
-    }).then(function (res) {
-      if (!res.ok) throw new Error("Reorder failed");
-      if (typeof window.showToast === "function") {
-        window.showToast(successMessage, "success");
-      }
-    }).catch(function () {
-      if (typeof window.showToast === "function") {
-        window.showToast(errorMessage, "error");
-      }
-      window.location.reload();
-    });
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error("Reorder failed");
+        if (typeof window.showToast === "function") {
+          window.showToast(successMessage, "success");
+        }
+      })
+      .catch(function () {
+        if (typeof window.showToast === "function") {
+          window.showToast(errorMessage, "error");
+        }
+        window.location.reload();
+      });
   }
 
   function finishDrag() {
@@ -311,9 +313,11 @@
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.setData(
       "text/plain",
-      roots.map(function (item) {
-        return item.dataset.id;
-      }).join(","),
+      roots
+        .map(function (item) {
+          return item.dataset.id;
+        })
+        .join(","),
     );
   });
 

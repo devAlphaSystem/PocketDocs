@@ -378,6 +378,11 @@
           ]
         },
         {
+          "name": "collapsed_by_default",
+          "type": "bool",
+          "required": false
+        },
+        {
           "name": "title",
           "type": "text",
           "required": true,

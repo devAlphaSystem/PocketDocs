@@ -1,9 +1,15 @@
 <% const _nonVersionedMode = typeof nonVersionedMode !== 'undefined' && nonVersionedMode; %>
+
 <% const _supportsKnowledgeBase = typeof supportsKnowledgeBase !== 'undefined' && supportsKnowledgeBase; %>
+
 <% const _kbBaseUrl = typeof kbBaseUrl !== 'undefined' ? kbBaseUrl : ''; %>
+
 <% const _knowledgeBaseSectionCounts = typeof knowledgeBaseSectionCounts !== 'undefined' && knowledgeBaseSectionCounts ? knowledgeBaseSectionCounts : {}; %>
+
 <% const _showFaqLink = _supportsKnowledgeBase && _kbBaseUrl && Number(_knowledgeBaseSectionCounts.faq || 0) > 0; %>
+
 <% const _showTroubleshootingLink = _supportsKnowledgeBase && _kbBaseUrl && Number(_knowledgeBaseSectionCounts.troubleshooting || 0) > 0; %>
+
 <% const _isChangelog = typeof currentPath !== 'undefined' && /\/changelog$/.test(currentPath); %>
 
 <nav class="docs-sidebar" id="docsSidebar" aria-label="<%= t('Documentation navigation') %>" data-close-label="<%= t('Close navigation') %>">
@@ -12,14 +18,18 @@
       <%- include('./version-switcher', { project: project, version: version, versions: versions }) %>
     </div>
   <% } %>
+
   <div class="docs-sidebar-search" role="search">
     <label for="docsSearch" class="sr-only"><%= t('Search documentation') %></label>
+
     <div class="search-input-wrap">
       <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
       <input type="search" id="docsSearch" placeholder="<%= t('Search documentation...') %>" autocomplete="off" aria-controls="searchResults" data-project="<%= project.slug %>" data-version="<%= version ? version.id : '' %>" data-searching="<%= t('Searching documentation...') %>" data-no-results="<%= t('No documentation found for this search.') %>" data-unavailable="<%= t('Search is unavailable. Check your connection and try again.') %>">
     </div>
+
     <div class="search-results" id="searchResults" aria-live="polite" aria-busy="false" hidden></div>
   </div>
+
   <ul class="docs-nav" id="docsNav">
     <% if (typeof pageTree !== 'undefined') { %>
       <%- include('./docs-sidebar-item', {
@@ -48,7 +58,7 @@
           <span><%= t('Frequently Asked Questions') %></span>
         </a>
       <% } %>
-      
+
       <% if (_showTroubleshootingLink) { %>
         <a href="<%= _kbBaseUrl %>/troubleshooting" class="docs-nav-link changelog-link<%= typeof section !== 'undefined' && section === 'troubleshooting' ? ' active' : '' %>"<%- typeof section !== 'undefined' && section === 'troubleshooting' ? ' aria-current="page"' : '' %>>
           <i class="ph ph-wrench" aria-hidden="true"></i>

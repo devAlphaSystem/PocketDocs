@@ -3,6 +3,7 @@
     <div>
       <a href="/admin/projects/<%= project.id %>" class="back-link"><i class="ph ph-arrow-left"></i> Versions</a>
     </div>
+
     <div class="header-actions">
       <% if (typeof changelog !== 'undefined' && changelog) { %>
         <a href="/docs/<%= project.slug %>/<%= version.slug %>/changelog" class="btn btn-outline" target="_blank"><i class="ph ph-arrow-square-out"></i> Preview</a>
@@ -30,5 +31,3 @@
     </div>
   </form>
 </div>
-
-

@@ -42,12 +42,15 @@
               <i class="ph ph-warning-circle"></i>
             <% } %>
           </div>
+
           <h1 class="error-code"><%= statusCode %></h1>
           <p class="error-message"><%= t(message) %></p>
+
           <div class="error-actions">
             <a href="/" class="btn btn-primary"><%= t('Go Home') %></a>
             <button onclick="history.back()" class="btn btn-outline"><%= t('Go Back') %></button>
           </div>
+
           <% if (typeof requestId !== 'undefined' && requestId) { %>
             <p class="error-request-id"><%= t('Request ID: {requestId}', { requestId }) %></p>
           <% } %>

@@ -83,22 +83,28 @@ const inlineSanitizeOptionsWithoutLinks = {
 };
 
 function inlineTokensToText(tokens) {
-  return tokens.map((token) => {
-    if (token.type === "html" || token.type === "image") {
-      return "";
-    }
-    if (token.type === "br") {
-      return " ";
-    }
-    if (Array.isArray(token.tokens)) {
-      return inlineTokensToText(token.tokens);
-    }
-    return token.text || "";
-  }).join("");
+  return tokens
+    .map((token) => {
+      if (token.type === "html" || token.type === "image") {
+        return "";
+      }
+      if (token.type === "br") {
+        return " ";
+      }
+      if (Array.isArray(token.tokens)) {
+        return inlineTokensToText(token.tokens);
+      }
+      return token.text || "";
+    })
+    .join("");
 }
 
 function slugifyHeading(text) {
-  return text.toLowerCase().replace(/&[a-z0-9#]+;/gi, "-").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  return text
+    .toLowerCase()
+    .replace(/&[a-z0-9#]+;/gi, "-")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function withUniqueSlug(base, seen) {

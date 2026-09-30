@@ -1,15 +1,19 @@
 <div class="admin-modal" id="adminModal" hidden>
   <div class="admin-modal-backdrop" data-modal-close></div>
+
   <div class="admin-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle" aria-describedby="adminModalMessage" tabindex="-1">
     <div class="admin-modal-header">
       <h3 class="admin-modal-title" id="adminModalTitle">Confirm Action</h3>
     </div>
+
     <div class="admin-modal-body">
       <div class="admin-modal-loading" id="adminModalLoading" hidden aria-hidden="true">
         <div class="admin-modal-spinner"></div>
       </div>
+
       <p class="admin-modal-message" id="adminModalMessage"></p>
     </div>
+
     <div class="admin-modal-actions">
       <button type="button" class="btn btn-ghost" id="adminModalCancel">Cancel</button>
       <button type="button" class="btn btn-danger" id="adminModalConfirm">Confirm</button>
@@ -19,6 +23,7 @@
 
 <div class="admin-drawer" id="adminDrawer" hidden>
   <div class="admin-drawer-backdrop" data-drawer-close></div>
+
   <section class="admin-drawer-panel" role="dialog" aria-modal="true" aria-labelledby="adminDrawerTitle" tabindex="-1">
     <header class="admin-drawer-header">
       <h2 id="adminDrawerTitle">Details</h2>
@@ -26,6 +31,7 @@
         <i class="ph ph-x"></i>
       </button>
     </header>
+
     <div class="admin-drawer-body" id="adminDrawerBody"></div>
     <footer class="admin-drawer-footer" id="adminDrawerFooter"></footer>
   </section>

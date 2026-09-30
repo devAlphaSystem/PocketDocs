@@ -25,6 +25,7 @@
   <summary class="header-action theme-toggle-btn" aria-label="Color scheme" title="Color scheme">
     <i class="ph ph-moon"></i>
   </summary>
+
   <div class="header-popover theme-popover">
     <button type="button" class="theme-option" data-theme-value="light">
       <i class="ph ph-sun"></i>
@@ -46,12 +47,14 @@
     <span><%= user ? user.email : 'Guest' %></span>
     <i class="ph ph-caret-down"></i>
   </summary>
+
   <div class="header-popover user-popover">
     <% if (user && user.role === 'owner') { %>
       <a href="/admin/users" class="header-popover-item">
         <i class="ph ph-users"></i>
         <span>Manage users</span>
       </a>
+
       <div class="header-popover-divider"></div>
     <% } %>
 

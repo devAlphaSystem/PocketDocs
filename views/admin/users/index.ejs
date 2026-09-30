@@ -35,13 +35,16 @@
               <td>
                 <div class="table-project-cell">
                   <span><%= u.name || '—' %></span>
+
                   <% if (u.id === user.id) { %>
                     <span class="badge badge-public">you</span>
                   <% } %>
                 </div>
               </td>
               <td><%= u.email %></td>
-              <td><span class="badge badge-<%= u.role === 'owner' ? 'public' : u.role === 'admin' ? 'private' : 'public' %>"><%= u.role %></span></td>
+              <td>
+                <span class="badge badge-<%= u.role === 'owner' ? 'public' : u.role === 'admin' ? 'private' : 'public' %>"><%= u.role %></span>
+              </td>
               <td><%= formatDate(u.created) %></td>
               <td class="table-actions-col">
                 <% if (u.role !== 'owner') { %>
@@ -76,17 +79,21 @@
         <i class="ph ph-x"></i>
       </button>
     </div>
+
     <form method="POST" action="/admin/users/create" novalidate>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
       <div class="dialog-body">
         <div class="form-group">
           <label for="create-name">Full name <span class="required">*</span></label>
           <input type="text" id="create-name" name="name" required maxlength="100" placeholder="Jane Doe">
         </div>
+
         <div class="form-group">
           <label for="create-email">Email <span class="required">*</span></label>
           <input type="email" id="create-email" name="email" required maxlength="255" placeholder="user@example.com">
         </div>
+
         <div class="form-group">
           <label for="create-role">Role <span class="required">*</span></label>
           <select id="create-role" name="role" required>
@@ -94,15 +101,18 @@
             <option value="admin">Admin</option>
           </select>
         </div>
+
         <div class="form-group">
           <label for="create-password">Password <span class="required">*</span></label>
           <input type="password" id="create-password" name="password" required minlength="8" maxlength="256" placeholder="Min 8 characters">
         </div>
+
         <div class="form-group">
           <label for="create-passwordConfirm">Confirm password <span class="required">*</span></label>
           <input type="password" id="create-passwordConfirm" name="passwordConfirm" required minlength="8" maxlength="256" placeholder="Repeat password">
         </div>
       </div>
+
       <div class="dialog-footer">
         <button type="button" class="btn btn-ghost" data-dialog-close="createUserModal">Close</button>
         <button type="submit" class="btn btn-primary"><i class="ph ph-user-plus"></i> Create User</button>
@@ -120,17 +130,21 @@
           <i class="ph ph-x"></i>
         </a>
       </div>
+
       <form method="POST" action="/admin/users/<%= editUser.id %>/update" novalidate>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
         <div class="dialog-body">
           <div class="form-group">
             <label for="edit-name">Full name <span class="required">*</span></label>
             <input type="text" id="edit-name" name="name" required maxlength="100" value="<%= editUser.name %>">
           </div>
+
           <div class="form-group">
             <label for="edit-email">Email <span class="required">*</span></label>
             <input type="email" id="edit-email" name="email" required maxlength="255" value="<%= editUser.email %>">
           </div>
+
           <div class="form-group">
             <label for="edit-role">Role <span class="required">*</span></label>
             <select id="edit-role" name="role" required>
@@ -138,15 +152,18 @@
               <option value="admin" <%= editUser.role === 'admin' ? 'selected' : '' %>>Admin</option>
             </select>
           </div>
+
           <div class="form-group">
             <label for="edit-password">New password</label>
             <input type="password" id="edit-password" name="password" minlength="8" maxlength="256" placeholder="Leave blank to keep current">
           </div>
+
           <div class="form-group">
             <label for="edit-passwordConfirm">Confirm new password</label>
             <input type="password" id="edit-passwordConfirm" name="passwordConfirm" minlength="8" maxlength="256" placeholder="Leave blank to keep current">
           </div>
         </div>
+
         <div class="dialog-footer">
           <a href="/admin/users" class="btn btn-ghost">Close</a>
           <button type="submit" class="btn btn-primary"><i class="ph ph-floppy-disk"></i> Save Changes</button>

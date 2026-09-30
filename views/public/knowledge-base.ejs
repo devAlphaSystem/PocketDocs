@@ -26,6 +26,7 @@
             </p>
           <% } %>
         </div>
+
         <div class="docs-content prose" dir="auto" data-copy-label="<%= t('Copy code') %>">
           <%- contentHtml %>
         </div>
@@ -42,8 +43,9 @@
                   <% if (node.icon) { %>
                     <i class="ph ph-<%= node.icon %>"></i>
                   <% } %>
-                    <bdi><%= node.title %></bdi>
-                  </h3>
+                  <bdi><%= node.title %></bdi>
+                </h3>
+
                 <span class="search-result-slug" dir="ltr">/<%= node.slug %></span>
               </a>
             <% } %>
@@ -74,9 +76,14 @@
     <% if (typeof headings !== 'undefined' && headings.length > 0) { %>
       <aside class="docs-toc" aria-label="<%= t('On this page') %>">
         <h2 class="docs-toc-title"><%= t('On this page') %></h2>
+
         <ul>
           <% for (const h of headings) { %>
-            <li class="toc-h<%= h.level %>"><a href="#<%= h.id %>"><bdi><%= h.text %></bdi></a></li>
+            <li class="toc-h<%= h.level %>">
+              <a href="#<%= h.id %>">
+                <bdi><%= h.text %></bdi>
+              </a>
+            </li>
           <% } %>
         </ul>
       </aside>
@@ -85,8 +92,13 @@
 </div>
 
 <script src="<%= assetUrl('/js/search.js') %>"></script>
+
 <script src="<%= assetUrl('/js/version-switcher.js') %>"></script>
+
 <script src="<%= assetUrl('/js/code-copy.js') %>"></script>
+
 <script src="<%= assetUrl('/js/docs-toc.js') %>"></script>
+
 <script src="<%= assetUrl('/js/markdown-checkboxes.js') %>"></script>
+
 <script type="module" src="<%= assetUrl('/js/mermaid-init.js') %>"></script>

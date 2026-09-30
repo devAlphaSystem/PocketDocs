@@ -1,7 +1,7 @@
 {
   "name": "pocketdocs",
-  "version": "0.27.0",
-  "updated": "2026.09.08.2122",
+  "version": "0.28.0",
+  "updated": "2026.09.30.1216",
   "description": "Self-hosted documentation platform with versioning, powered by PocketBase",
   "type": "module",
   "main": "src/index.js",
@@ -10,33 +10,31 @@
     "dev": "nodemon src/index.js",
     "lint": "eslint src/",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "postinstall": "patch-package"
+    "format:check": "prettier --check ."
   },
   "engines": {
     "node": ">=20.0.0"
   },
   "dependencies": {
     "archiver": "^8.0.0",
-    "compression": "^1.8.1",
+    "compression": "^1.8.2",
     "cookie-parser": "1.4.7",
-    "dotenv": "17.4.2",
+    "dotenv": "18.0.4",
     "ejs": "6.0.1",
     "express": "^5.2.1",
     "express-ejs-layouts": "2.5.1",
     "express-rate-limit": "8.7.0",
     "highlight.js": "11.12.0",
-    "marked": "18.0.12",
+    "marked": "18.0.14",
     "marked-highlight": "2.2.4",
     "pocketbase": "^0.28.1",
     "sanitize-html": "2.17.7",
     "winston": "3.19.0",
-    "zod": "4.5.4"
+    "zod": "4.6.5"
   },
   "devDependencies": {
-    "eslint": "^10.10.0",
+    "eslint": "^10.11.0",
     "nodemon": "3.1.14",
-    "patch-package": "^8.0.1",
-    "prettier": "3.9.4"
+    "prettier": "3.9.9"
   }
 }

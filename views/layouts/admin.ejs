@@ -42,16 +42,27 @@
 
   <body class="admin-body">
     <% const adminUser = typeof currentUser !== 'undefined' ? currentUser : user; %>
+
     <% const adminPath = typeof currentPath !== 'undefined' ? currentPath : ''; %>
+
     <% const adminHeaderSubtitle = typeof headerSubtitle !== 'undefined' ? headerSubtitle : ''; %>
+
     <% const adminHeaderBadge = typeof headerBadge !== 'undefined' ? headerBadge : null; %>
+
     <% const adminHeaderSearch = typeof headerSearch !== 'undefined' ? headerSearch : null; %>
+
     <% const adminPageListActions = typeof pageListActions !== 'undefined' ? pageListActions : null; %>
+
     <% const adminProjects = typeof projects !== 'undefined' ? projects : []; %>
+
     <% const adminProject = typeof project !== 'undefined' ? project : null; %>
+
     <% const adminPagination = typeof pagination !== 'undefined' ? pagination : null; %>
+
     <% const adminSection = adminPath.startsWith('/admin/users') ? 'Users' : adminPath.startsWith('/admin/settings') ? 'Settings' : 'Projects'; %>
+
     <% const adminSectionHref = adminSection === 'Users' ? '/admin/users' : adminSection === 'Settings' ? '/admin/settings' : '/admin/projects'; %>
+
     <% const adminPageTitle = adminSection === 'Settings' && title === 'Settings' ? 'Application' : title; %>
 
     <div class="admin-app">
@@ -85,6 +96,7 @@
                 <% if (adminPageTitle !== adminSection) { %>
                   <a href="<%= adminSectionHref %>"><%= adminSection %></a>
                 <% } %>
+
                 <span><%= adminPageTitle %></span>
               </nav>
 
@@ -146,6 +158,7 @@
                   <% if (adminHeaderSubtitle) { %>
                     <span class="header-subtitle"><%= adminHeaderSubtitle %></span>
                   <% } %>
+
                   <% if (adminHeaderBadge && adminHeaderBadge.text) { %>
                     <span class="badge badge-<%= adminHeaderBadge.variant || 'draft' %>"><%= adminHeaderBadge.text %></span>
                   <% } %>
@@ -161,6 +174,7 @@
               <% if (adminPagination && Number.isFinite(Number(adminPagination.totalItems))) { %>
                 <span class="admin-footer-total">Total: <%= adminPagination.totalItems %></span>
               <% } %>
+
               <div class="admin-footer-credits">
                 <a href="https://docs.alphasystem.dev/docs/pocketdocs" target="_blank" rel="noopener">
                   <i class="ph ph-book-open-text"></i>
@@ -182,9 +196,13 @@
     <%- include('../partials/admin-modal') %>
 
     <script defer src="<%= assetUrl('/js/theme-toggle.js') %>"></script>
+
     <script defer src="<%= assetUrl('/js/custom-select.js') %>"></script>
+
     <script defer src="<%= assetUrl('/js/swipe-sidebar.js') %>"></script>
+
     <script defer src="<%= assetUrl('/js/admin.js') %>"></script>
+
     <script defer src="<%= assetUrl('/js/page-load-more.js') %>"></script>
 
     <% for (const src of normalizeViewAssetList(typeof extraJs !== 'undefined' ? extraJs : null)) { %>

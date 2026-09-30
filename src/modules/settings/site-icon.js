@@ -26,7 +26,10 @@ function hasValidWebpSignature(bytes) {
 export function isSafeSvg(bytes) {
   let source;
   try {
-    source = new TextDecoder("utf-8", { fatal: true }).decode(bytes).replace(/^\uFEFF/, "").trim();
+    source = new TextDecoder("utf-8", { fatal: true })
+      .decode(bytes)
+      .replace(/^\uFEFF/, "")
+      .trim();
   } catch {
     return false;
   }

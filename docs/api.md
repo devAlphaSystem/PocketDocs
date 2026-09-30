@@ -383,6 +383,7 @@ Creates a page/article or, for the Documents section, a sidebar header or separa
 |-------|------|----------|-------------|
 | `section` | string | No | `documents`, `faq`, or `troubleshooting`; default `documents` |
 | `itemType` | string | No | `page` (default), `header`, or `separator`; non-page values apply only to Documents |
+| `collapsed_by_default` | string | No | Header only; `true` or `false` (default `false`); controls the initial public sidebar group state |
 | `title` | string | Conditional | 1–200 characters; required for pages/articles and headers, optional for separators |
 | `slug` | string | Page/article only | 1–120 characters, slug pattern |
 | `content` | string | No | Page/article only; max 500,000 characters |
@@ -449,7 +450,7 @@ Deletes selected content or sidebar items from one section.
 
 ### `POST /admin/projects/:projectId/versions/:versionId/pages/sidebar-items/:itemId`
 
-Updates the title of an existing Documents sidebar header.
+Updates the title and default expanded/collapsed state of an existing Documents sidebar header.
 
 **Auth:** Required
 
@@ -457,7 +458,7 @@ Updates the title of an existing Documents sidebar header.
 
 **CSRF:** Yes
 
-**Body:** `title` (required, 1–200 characters) and `_csrf`.
+**Body:** `title` (required, 1–200 characters), `collapsed_by_default` (`true` or `false`, default `false`), and `_csrf`.
 
 ### `POST /admin/projects/:projectId/versions/:versionId/pages/sidebar-items/:itemId/delete`
 

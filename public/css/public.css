@@ -144,6 +144,7 @@
 
 .public-header a:focus-visible,
 .docs-nav-link:focus-visible,
+.docs-nav-heading:focus-visible,
 .version-tile:focus-visible,
 .docs-pagination-link:focus-visible,
 .search-results-item:focus-visible,
@@ -668,6 +669,9 @@
 }
 
 .docs-nav-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   margin: var(--space-5) var(--space-3) var(--space-2);
   margin-inline-start: calc(var(--space-3) + min(var(--nav-indent, 0px), var(--space-16)));
   color: var(--text-tertiary);
@@ -676,14 +680,38 @@
   letter-spacing: 0.06em;
   line-height: 1.4;
   text-transform: uppercase;
+  list-style: none;
+  cursor: pointer;
 }
 
-.docs-nav-heading:first-child {
+.docs-nav-group:first-child > details > .docs-nav-heading {
   margin-top: var(--space-2);
 }
 
+.docs-nav-heading::-webkit-details-marker {
+  display: none;
+}
+
+.docs-nav-heading:hover {
+  color: var(--text-primary);
+}
+
 .docs-nav-heading span {
+  min-width: 0;
   overflow-wrap: anywhere;
+}
+
+.docs-nav-heading i {
+  margin-inline-start: auto;
+  flex-shrink: 0;
+}
+
+.docs-nav-group > details:not([open]) > .docs-nav-heading i {
+  transform: rotate(-90deg);
+}
+
+[dir="rtl"] .docs-nav-group > details:not([open]) > .docs-nav-heading i {
+  transform: rotate(90deg);
 }
 
 .docs-nav-separator {
@@ -733,7 +761,8 @@
   white-space: nowrap;
 }
 
-.docs-nav-children {
+.docs-nav-children,
+.docs-nav-group-items {
   list-style: none;
   padding-inline-start: 0;
 }

@@ -404,10 +404,12 @@ export async function createSidebarNavigationItem(versionId, data, requestId) {
   const items = pagesResult.items || [];
   const maxOrder = items.reduce((max, item) => Math.max(max, item.order || 0), 0);
   const title = itemType === PAGE_ITEM_TYPES.HEADER ? data.title.trim() : "Separator";
+  const collapsedByDefault = itemType === PAGE_ITEM_TYPES.HEADER && data.collapsed_by_default === true;
   const result = await pbCreate(COLLECTIONS.PAGES, {
     version: versionId,
     section: PAGE_SECTIONS.DOCUMENTS,
     item_type: itemType,
+    collapsed_by_default: collapsedByDefault,
     title,
     slug: `sidebar-${itemType}-${randomUUID()}`,
     content: "",
@@ -420,27 +422,34 @@ export async function createSidebarNavigationItem(versionId, data, requestId) {
     throw new ValidationError("Failed to create sidebar item.");
   }
 
-  if (result.data.item_type !== itemType) {
+  if (result.data.item_type !== itemType || result.data.collapsed_by_default !== collapsedByDefault) {
     const cleanup = await pbDelete(COLLECTIONS.PAGES, result.data.id);
     if (!cleanup.ok) {
       logger.warn("Failed to remove invalid sidebar item after schema mismatch", { requestId, pageId: result.data.id, versionId, itemType });
     }
-    throw new ValidationError("PocketDocs could not persist this sidebar item type. Apply the current database schema and try again.");
+    throw new ValidationError("PocketDocs could not persist this sidebar item. Apply the current database schema and try again.");
   }
 
   logger.info("Sidebar item created", { requestId, pageId: result.data.id, versionId, itemType });
   return result.data;
 }
 
-export async function updateSidebarHeader(pageId, title, requestId) {
+export async function updateSidebarHeader(pageId, data, requestId) {
   const item = await getPage(pageId);
   if (item.section !== PAGE_SECTIONS.DOCUMENTS || getPageItemType(item) !== PAGE_ITEM_TYPES.HEADER) {
     throw new NotFoundError("Sidebar header");
   }
 
-  const result = await pbUpdate(COLLECTIONS.PAGES, pageId, { title });
+  const result = await pbUpdate(COLLECTIONS.PAGES, pageId, {
+    title: data.title,
+    collapsed_by_default: data.collapsed_by_default,
+  });
   if (!result.ok) {
     throw new ValidationError("Failed to update sidebar header.");
+  }
+
+  if (result.data.collapsed_by_default !== data.collapsed_by_default) {
+    throw new ValidationError("PocketDocs could not persist the sidebar header default state. Apply the current database schema and try again.");
   }
 
   logger.info("Sidebar header updated", { requestId, pageId, versionId: item.version });
@@ -523,12 +532,14 @@ export async function deletePages(versionId, section, pageIds, requestId) {
   const selectedPages = uniquePageIds.map((pageId) => pageMap.get(pageId));
   selectedPages.sort((left, right) => pageDepth(right, pageMap) - pageDepth(left, pageMap));
   const selectedPageIds = new Set(uniquePageIds);
-  const reparentOperations = (pagesResult.items || []).filter((page) => !selectedPageIds.has(page.id) && selectedPageIds.has(page.parent)).map((page) => ({
-    method: "update",
-    collection: COLLECTIONS.PAGES,
-    id: page.id,
-    data: { parent: survivingParentId(page, pageMap, selectedPageIds) },
-  }));
+  const reparentOperations = (pagesResult.items || [])
+    .filter((page) => !selectedPageIds.has(page.id) && selectedPageIds.has(page.parent))
+    .map((page) => ({
+      method: "update",
+      collection: COLLECTIONS.PAGES,
+      id: page.id,
+      data: { parent: survivingParentId(page, pageMap, selectedPageIds) },
+    }));
   const deleteOperations = selectedPages.map((page) => ({
     method: "delete",
     collection: COLLECTIONS.PAGES,
@@ -650,6 +661,7 @@ export async function clonePages(sourceVersionId, targetVersionId, requestId) {
       icon: page.icon || "",
       content_updated: page.content_updated,
       item_type: getPageItemType(page),
+      collapsed_by_default: page.collapsed_by_default === true,
       order: page.order || 0,
     });
     if (cloned.ok) {

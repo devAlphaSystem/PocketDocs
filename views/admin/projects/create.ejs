@@ -3,6 +3,7 @@
     <div>
       <a href="/admin/projects" class="back-link"><i class="ph ph-arrow-left"></i> Projects</a>
     </div>
+
     <div class="header-actions">
       <a href="/admin/projects" class="btn btn-outline">Cancel</a>
       <button type="submit" form="project-create-form" class="btn btn-primary" id="manual-submit-btn"><i class="ph ph-plus"></i> Create Project</button>
@@ -24,10 +25,12 @@
 
     <div class="form-group">
       <label for="slug">Slug <span class="required">*</span></label>
+
       <div class="input-prefix-wrap">
         <span class="input-prefix">/docs/</span>
         <input type="text" id="slug" name="slug" placeholder="my-docs" required maxlength="80" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" value="<%= typeof values !== 'undefined' && values.slug ? values.slug : '' %>">
       </div>
+
       <p class="form-hint">URL-safe identifier. Lowercase letters, numbers, and hyphens only.</p>
     </div>
 
@@ -50,6 +53,7 @@
         <option value="versioned"<%= typeof values === 'undefined' || !values.mode || values.mode === 'versioned' ? ' selected' : '' %>>Versioned (with version history)</option>
         <option value="non_versioned"<%= typeof values !== 'undefined' && values.mode === 'non_versioned' ? ' selected' : '' %>>Non-Versioned</option>
       </select>
+
       <p class="form-hint">Versioned projects support release history and changelogs. Non-Versioned projects use one internal default version.</p>
     </div>
   </form>

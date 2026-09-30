@@ -29,10 +29,16 @@
                   <span><%= proj.name %></span>
                 </div>
               </td>
-              <td><code><%= proj.slug %></code></td>
-              <td><span class="badge badge-<%= proj.visibility %>"><%= proj.visibility %></span></td>
+              <td>
+                <code><%= proj.slug %></code>
+              </td>
+              <td>
+                <span class="badge badge-<%= proj.visibility %>"><%= proj.visibility %></span>
+              </td>
               <td><%= formatDate(proj.created) %></td>
-              <td class="pb-arrow-column"><i class="ph ph-arrow-right"></i></td>
+              <td class="pb-arrow-column">
+                <i class="ph ph-arrow-right"></i>
+              </td>
             </tr>
           <% } %>
         </tbody>

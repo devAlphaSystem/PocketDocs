@@ -18,6 +18,7 @@
         <span class="home-section-label"><%= t('Public library') %></span>
         <h2 id="public-projects-title"><%= t('Explore projects') %></h2>
       </div>
+
       <span class="home-project-count"><%= t('{count} project', { count: _projectCount }) %></span>
     </div>
 
@@ -36,18 +37,22 @@
               <% } else { %>
                 <h3 class="project-card-title" dir="auto"><%= proj.name %></h3>
               <% } %>
+
               <span class="project-card-open" aria-hidden="true">
                 <i class="ph ph-arrow-up-right"></i>
               </span>
             </div>
+
             <div class="project-card-body">
               <% if (proj.logo) { %>
                 <h3 dir="auto"><%= proj.name %></h3>
               <% } %>
+
               <% if (proj.description) { %>
                 <p dir="auto"><%= proj.description %></p>
               <% } %>
             </div>
+
             <div class="project-card-footer">
               <span class="project-card-type"><%= t('Documentation') %></span>
               <span class="project-slug" dir="ltr">/<%= proj.slug %></span>

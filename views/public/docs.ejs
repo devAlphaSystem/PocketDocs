@@ -24,6 +24,7 @@
           </p>
         <% } %>
       </div>
+
       <div class="docs-content prose" dir="auto" data-copy-label="<%= t('Copy code') %>">
         <%- contentHtml %>
       </div>
@@ -33,19 +34,21 @@
           <% if (typeof prevPage !== 'undefined' && prevPage) { %>
             <a href="<% if (_nonVersionedMode) { %>/docs/<%= project.slug %>/<%= prevPage.slug %><% } else { %>/docs/<%= project.slug %>/<%= version.slug %>/<%= prevPage.slug %><% } %>" class="docs-pagination-link prev">
               <i class="ph ph-arrow-left" aria-hidden="true"></i>
+
               <div>
                 <span class="docs-pagination-label"><%= t('Previous') %></span>
                 <span class="docs-pagination-title" dir="auto"><%= prevPage.title %></span>
               </div>
             </a>
           <% } %>
-          
+
           <% if (typeof nextPage !== 'undefined' && nextPage) { %>
             <a href="<% if (_nonVersionedMode) { %>/docs/<%= project.slug %>/<%= nextPage.slug %><% } else { %>/docs/<%= project.slug %>/<%= version.slug %>/<%= nextPage.slug %><% } %>" class="docs-pagination-link next">
               <div>
                 <span class="docs-pagination-label"><%= t('Next') %></span>
                 <span class="docs-pagination-title" dir="auto"><%= nextPage.title %></span>
               </div>
+
               <i class="ph ph-arrow-right" aria-hidden="true"></i>
             </a>
           <% } %>
@@ -56,9 +59,14 @@
     <% if (typeof headings !== 'undefined' && headings.length > 0) { %>
       <aside class="docs-toc" aria-label="<%= t('On this page') %>">
         <h2 class="docs-toc-title"><%= t('On this page') %></h2>
+
         <ul>
           <% for (const h of headings) { %>
-            <li class="toc-h<%= h.level %>"><a href="#<%= h.id %>"><bdi><%= h.text %></bdi></a></li>
+            <li class="toc-h<%= h.level %>">
+              <a href="#<%= h.id %>">
+                <bdi><%= h.text %></bdi>
+              </a>
+            </li>
           <% } %>
         </ul>
       </aside>
@@ -67,8 +75,13 @@
 </div>
 
 <script src="<%= assetUrl('/js/search.js') %>"></script>
+
 <script src="<%= assetUrl('/js/version-switcher.js') %>"></script>
+
 <script src="<%= assetUrl('/js/code-copy.js') %>"></script>
+
 <script src="<%= assetUrl('/js/docs-toc.js') %>"></script>
+
 <script src="<%= assetUrl('/js/markdown-checkboxes.js') %>"></script>
+
 <script type="module" src="<%= assetUrl('/js/mermaid-init.js') %>"></script>

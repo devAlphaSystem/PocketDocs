@@ -1,16 +1,25 @@
 <% const hasProject = typeof project !== 'undefined' && project; %>
+
 <header class="public-header<%= hasProject ? '' : ' public-header-home' %>">
   <% if (hasProject) { %>
     <button type="button" class="btn btn-ghost docs-sidebar-toggle" aria-label="<%= t('Open documentation navigation') %>" aria-controls="docsSidebar" aria-expanded="false">
       <i class="ph ph-list" aria-hidden="true"></i>
     </button>
+
     <ul class="header-breadcrumb">
-      <li><a href="/"><%= t('Home') %></a></li>
-      <li><a href="/docs/<%= project.slug %>"><bdi><%= project.name %></bdi></a></li>
+      <li>
+        <a href="/"><%= t('Home') %></a>
+      </li>
+      <li>
+        <a href="/docs/<%= project.slug %>">
+          <bdi><%= project.name %></bdi>
+        </a>
+      </li>
     </ul>
   <% } else { %>
     <a href="/" class="public-brand" aria-label="<%= t('{siteName} home', { siteName: headerTitleText }) %>">
       <img src="<%= siteIconUrl %>" alt="" aria-hidden="true">
+
       <% if (headerTitleHtml) { %>
         <span class="public-brand-title" dir="auto"><%- headerTitleHtml %></span>
       <% } else { %>
@@ -23,6 +32,7 @@
     <button class="theme-toggle-btn btn btn-ghost public-theme-toggle" id="themeToggle" aria-label="<%= t('Switch color theme') %>" data-light-label="<%= t('Switch to light theme') %>" data-dark-label="<%= t('Switch to dark theme') %>">
       <i class="ph ph-moon" aria-hidden="true"></i>
     </button>
+
     <% if (typeof ipAllowed !== 'undefined' && ipAllowed) { %>
       <% if (user) { %>
         <a href="/admin" class="btn btn-outline"><%= t('Dashboard') %></a>

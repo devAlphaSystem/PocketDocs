@@ -1,7 +1,11 @@
 <% const _projectMode = project.mode || 'versioned'; %>
+
 <% const _singleVersionMode = _projectMode === 'non_versioned'; %>
+
 <% const _pages = typeof pages !== 'undefined' ? pages : []; %>
+
 <% const _defaultVersion = typeof defaultVersion !== 'undefined' ? defaultVersion : null; %>
+
 <% const _versions = typeof versions !== 'undefined' ? versions : []; %>
 
 <div class="project-detail">
@@ -12,7 +16,9 @@
   <% if (_singleVersionMode) { %>
     <% if (!_defaultVersion) { %>
       <div class="empty-state small">
-        <div class="empty-icon"><i class="ph ph-warning-circle"></i></div>
+        <div class="empty-icon">
+          <i class="ph ph-warning-circle"></i>
+        </div>
         <h3>Setup incomplete</h3>
         <p>No internal default version found for this project. Please delete and recreate it.</p>
       </div>
@@ -39,6 +45,7 @@
                   <%= pg.title %></h3>
                 <span class="version-slug">/<%= pg.slug %></span>
               </div>
+
               <div class="version-actions">
                 <a href="/admin/projects/<%= project.id %>/versions/<%= _defaultVersion.id %>/pages/<%= pg.id %>" class="btn btn-outline" data-drawer-url="/admin/projects/<%= project.id %>/versions/<%= _defaultVersion.id %>/pages/<%= pg.id %>" data-drawer-title="Edit Page"><i class="ph ph-pencil"></i> Edit</a>
               </div>
@@ -68,16 +75,24 @@
               <div class="version-info">
                 <h3><%= ver.label %></h3>
                 <span class="version-slug">/<%= ver.slug %></span>
+
                 <% if (ver.is_public) { %>
                   <span class="badge badge-public">Public</span>
                 <% } else { %>
                   <span class="badge badge-draft">Draft</span>
                 <% } %>
               </div>
+
               <div class="version-actions">
-                <a href="/admin/projects/<%= project.id %>/versions/<%= ver.id %>/pages" class="btn btn-row-action" title="Content" aria-label="Open content for <%= ver.label %>"><i class="ph ph-files"></i></a>
-                <a href="/admin/projects/<%= project.id %>/versions/<%= ver.id %>/changelog" class="btn btn-row-action" title="Changelog" data-drawer-url="/admin/projects/<%= project.id %>/versions/<%= ver.id %>/changelog" data-drawer-title="Edit Changelog" aria-label="Edit changelog for <%= ver.label %>"><i class="ph ph-clock-counter-clockwise"></i></a>
-                <a href="/admin/projects/<%= project.id %>/versions/<%= ver.id %>/edit" class="btn btn-row-action" title="Edit" data-drawer-url="/admin/projects/<%= project.id %>/versions/<%= ver.id %>/edit" data-drawer-title="Edit Version" aria-label="Edit <%= ver.label %>"><i class="ph ph-pencil"></i></a>
+                <a href="/admin/projects/<%= project.id %>/versions/<%= ver.id %>/pages" class="btn btn-row-action" title="Content" aria-label="Open content for <%= ver.label %>">
+                  <i class="ph ph-files"></i>
+                </a>
+                <a href="/admin/projects/<%= project.id %>/versions/<%= ver.id %>/changelog" class="btn btn-row-action" title="Changelog" data-drawer-url="/admin/projects/<%= project.id %>/versions/<%= ver.id %>/changelog" data-drawer-title="Edit Changelog" aria-label="Edit changelog for <%= ver.label %>">
+                  <i class="ph ph-clock-counter-clockwise"></i>
+                </a>
+                <a href="/admin/projects/<%= project.id %>/versions/<%= ver.id %>/edit" class="btn btn-row-action" title="Edit" data-drawer-url="/admin/projects/<%= project.id %>/versions/<%= ver.id %>/edit" data-drawer-title="Edit Version" aria-label="Edit <%= ver.label %>">
+                  <i class="ph ph-pencil"></i>
+                </a>
               </div>
             </div>
           </div>

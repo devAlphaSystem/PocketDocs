@@ -1,11 +1,19 @@
 <% const isDocumentsSection = section === 'documents'; %>
+
 <% const itemLabel = sectionOption.itemLabel || (isDocumentsSection ? 'page' : 'article'); %>
+
 <% const selectedParentValue = typeof page !== 'undefined' && page ? page.parent : (typeof formValues !== 'undefined' && formValues && formValues.parent ? formValues.parent : ''); %>
+
 <% const isNewItem = !(typeof page !== 'undefined' && page); %>
+
 <% const supportsSidebarItems = isNewItem && isDocumentsSection; %>
+
 <% const submittedItemType = typeof formValues !== 'undefined' && formValues && formValues.itemType ? formValues.itemType : 'page'; %>
+
 <% const selectedItemType = supportsSidebarItems && (submittedItemType === 'header' || submittedItemType === 'separator') ? submittedItemType : 'page'; %>
+
 <% const isSidebarItem = supportsSidebarItems && selectedItemType !== 'page'; %>
+
 <% const isSeparator = supportsSidebarItems && selectedItemType === 'separator'; %>
 
 <div class="editor-page">
@@ -13,6 +21,7 @@
     <div>
       <a href="/admin/projects/<%= project.id %>/versions/<%= version.id %>/pages?section=<%= section %>" class="back-link"><i class="ph ph-arrow-left"></i> <%= sectionLabel %></a>
     </div>
+
     <div class="header-actions">
       <% if (typeof page !== 'undefined' && page) { %>
         <% if (isDocumentsSection) { %>
@@ -29,7 +38,11 @@
           <% } %>
         <% } %>
       <% } %>
-      <button type="submit" form="pageForm" class="btn btn-primary"<% if (supportsSidebarItems) { %> data-content-item-submit<% } %>><i class="ph <%= supportsSidebarItems ? 'ph-plus' : 'ph-floppy-disk' %>"></i> <span><%= supportsSidebarItems ? (selectedItemType === 'page' ? 'Create Page' : selectedItemType === 'header' ? 'Add Header' : 'Add Separator') : 'Save' %></span></button>
+
+      <button type="submit" form="pageForm" class="btn btn-primary"<% if (supportsSidebarItems) { %> data-content-item-submit<% } %>>
+        <i class="ph <%= supportsSidebarItems ? 'ph-plus' : 'ph-floppy-disk' %>"></i>
+        <span><%= supportsSidebarItems ? (selectedItemType === 'page' ? 'Create Page' : selectedItemType === 'header' ? 'Add Header' : 'Add Separator') : 'Save' %></span>
+      </button>
     </div>
   </div>
 
@@ -53,24 +66,31 @@
           <option value="header"<%= selectedItemType === 'header' ? ' selected' : '' %>>Header</option>
           <option value="separator"<%= selectedItemType === 'separator' ? ' selected' : '' %>>Separator</option>
         </select>
-        <p class="form-hint" data-content-item-help><%= selectedItemType === 'page' ? 'A page contains documentation and can be opened from the public sidebar.' : selectedItemType === 'header' ? 'A header is displayed as a non-clickable label in the public sidebar.' : 'A separator is displayed as a horizontal line in the public sidebar.' %></p>
+
+        <p class="form-hint" data-content-item-help><%= selectedItemType === 'page' ? 'A page contains documentation and can be opened from the public sidebar.' : selectedItemType === 'header' ? 'A header groups pages in a collapsible section of the public sidebar.' : 'A separator is displayed as a horizontal line in the public sidebar.' %></p>
       </div>
     <% } %>
 
     <div class="editor-meta"<%= isSeparator ? ' hidden' : '' %> data-content-item-meta>
       <div class="form-row">
         <div class="form-group flex-2"<%= isSeparator ? ' hidden' : '' %> data-content-item-title-group>
-          <label for="title"><span data-content-item-title-label><%= isSidebarItem ? 'Header title' : 'Title' %></span> <span class="required">*</span></label>
+          <label for="title">
+            <span data-content-item-title-label><%= isSidebarItem ? 'Header title' : 'Title' %></span>
+            <span class="required">*</span>
+          </label>
           <input type="text" id="title" name="title" placeholder="<%= isSidebarItem ? 'API Reference' : (isDocumentsSection ? 'Getting Started' : 'How do I reset my password?') %>" required maxlength="<%= isSidebarItem ? maxTitleLength : maxPageTitleLength %>" value="<%= typeof page !== 'undefined' && page ? page.title : (typeof formValues !== 'undefined' && formValues && formValues.title ? formValues.title : '') %>" data-page-title-input data-page-title-maxlength="<%= maxPageTitleLength %>" data-header-title-maxlength="<%= maxTitleLength %>" data-auto-slug-source data-auto-slug-target="slug" data-auto-slug-when-empty="true">
         </div>
+
         <div class="form-group flex-1"<%= isSidebarItem ? ' hidden' : '' %> data-content-item-page-only>
           <label for="slug">Slug</label>
           <input type="text" id="slug" name="slug" placeholder="<%= isDocumentsSection ? 'getting-started' : 'reset-password' %>" maxlength="120" value="<%= typeof page !== 'undefined' && page ? page.slug : (typeof formValues !== 'undefined' && formValues && formValues.slug ? formValues.slug : '') %>">
         </div>
+
         <div class="form-group flex-1"<%= isSidebarItem ? ' hidden' : '' %> data-content-item-page-only>
           <label for="icon">Icon (<a href="https://phosphoricons.com/#toolbar" target="_blank" rel="noopener noreferrer">Phosphor</a>)</label>
           <input type="text" id="icon" name="icon" placeholder="<%= isDocumentsSection ? 'book-open' : sectionIcon %>" maxlength="50" value="<%= typeof page !== 'undefined' && page ? (page.icon || '') : (typeof formValues !== 'undefined' && formValues && formValues.icon ? formValues.icon : '') %>" data-page-icon-input>
         </div>
+
         <div class="form-group flex-1"<%= isSidebarItem ? ' hidden' : '' %> data-content-item-page-only>
           <label for="parent">Parent <%= itemLabel %></label>
           <select id="parent" name="parent">
@@ -86,6 +106,16 @@
         </div>
       </div>
     </div>
+
+    <% if (supportsSidebarItems) { %>
+      <div class="form-group"<%= selectedItemType === 'header' ? '' : ' hidden' %> data-content-item-header-only>
+        <label for="collapsed_by_default">Default state</label>
+        <select id="collapsed_by_default" name="collapsed_by_default">
+          <option value="false">Expanded</option>
+          <option value="true"<%= typeof formValues !== 'undefined' && formValues && formValues.collapsed_by_default === 'true' ? ' selected' : '' %>>Collapsed</option>
+        </select>
+      </div>
+    <% } %>
 
     <div class="editor-content"<%= isSidebarItem ? ' hidden' : '' %> data-content-item-page-only>
       <textarea id="content" name="content" class="textarea-content"><%= typeof page !== 'undefined' && page ? page.content : (typeof formValues !== 'undefined' && formValues && formValues.content ? formValues.content : '') %></textarea>

@@ -277,7 +277,7 @@ router.post("/sidebar-items/:itemId", csrfMiddleware, requireProjectAccess(ROLES
 
     const item = await getPage(req.params.itemId);
     assertPageBelongsToVersion(item, context.version.id);
-    await updateSidebarHeader(item.id, parsed.data.title, req.requestId);
+    await updateSidebarHeader(item.id, parsed.data, req.requestId);
     res.redirect(pageAdminUrl(context.project.id, context.version.id, PAGE_SECTIONS.DOCUMENTS, { success: "Sidebar header updated." }));
   } catch (err) {
     if (err.statusCode === 422) {

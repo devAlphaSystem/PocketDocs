@@ -30,43 +30,46 @@
 
     fetch(button.href, {
       headers: { "X-Requested-With": "XMLHttpRequest" },
-    }).then(function (response) {
-      if (!response.ok) throw new Error("Failed to load more items");
-      return response.text();
-    }).then(function (html) {
-      var parsed = new DOMParser().parseFromString(html, "text/html");
-      var nextList = parsed.querySelector("[data-load-more-list]");
-      if (!nextList) throw new Error("Missing list in response");
+    })
+      .then(function (response) {
+        if (!response.ok) throw new Error("Failed to load more items");
+        return response.text();
+      })
+      .then(function (html) {
+        var parsed = new DOMParser().parseFromString(html, "text/html");
+        var nextList = parsed.querySelector("[data-load-more-list]");
+        if (!nextList) throw new Error("Missing list in response");
 
-      var knownIds = loadedItemIds();
-      var appendedItems = [];
+        var knownIds = loadedItemIds();
+        var appendedItems = [];
 
-      Array.from(nextList.querySelectorAll(":scope > [data-load-more-item]")).forEach(function (item) {
-        var itemId = item.getAttribute("data-load-more-item");
-        if (knownIds.has(itemId)) return;
-        knownIds.add(itemId);
-        appendedItems.push(item);
-        list.appendChild(item);
-      });
+        Array.from(nextList.querySelectorAll(":scope > [data-load-more-item]")).forEach(function (item) {
+          var itemId = item.getAttribute("data-load-more-item");
+          if (knownIds.has(itemId)) return;
+          knownIds.add(itemId);
+          appendedItems.push(item);
+          list.appendChild(item);
+        });
 
-      var nextButton = parsed.querySelector("[data-load-more]");
-      if (nextButton) {
-        button.setAttribute("href", nextButton.getAttribute("href"));
+        var nextButton = parsed.querySelector("[data-load-more]");
+        if (nextButton) {
+          button.setAttribute("href", nextButton.getAttribute("href"));
+          setLoading(false);
+        } else {
+          container.remove();
+        }
+
+        document.dispatchEvent(
+          new CustomEvent("pocketdocs:items-loaded", {
+            detail: { items: appendedItems },
+          }),
+        );
+      })
+      .catch(function () {
         setLoading(false);
-      } else {
-        container.remove();
-      }
-
-      document.dispatchEvent(
-        new CustomEvent("pocketdocs:items-loaded", {
-          detail: { items: appendedItems },
-        }),
-      );
-    }).catch(function () {
-      setLoading(false);
-      if (typeof window.showToast === "function") {
-        window.showToast("Could not load more items. Please try again.", "error");
-      }
-    });
+        if (typeof window.showToast === "function") {
+          window.showToast("Could not load more items. Please try again.", "error");
+        }
+      });
   });
 })();

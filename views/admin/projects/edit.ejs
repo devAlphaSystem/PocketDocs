@@ -3,9 +3,11 @@
     <div>
       <a href="/admin/projects/<%= project.id %>" class="back-link"><i class="ph ph-arrow-left"></i> <%= project.name %></a>
     </div>
+
     <div class="header-actions">
       <a href="/admin/projects/<%= project.id %>" class="btn btn-outline">Cancel</a>
       <button type="submit" form="project-edit-form" class="btn btn-primary"><i class="ph ph-floppy-disk"></i> Save Changes</button>
+
       <form method="POST" action="/admin/projects/<%= project.id %>/delete" class="inline-form" data-confirm-title="Delete project?" data-confirm-message="Delete this project and all its content? This cannot be undone." data-confirm-button="Delete" data-confirm-variant="danger">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button type="submit" class="btn btn-danger"><i class="ph ph-trash"></i> Delete</button>
@@ -16,7 +18,7 @@
   <% if (typeof error !== 'undefined' && error) { %>
     <div class="alert alert-error"><i class="ph ph-warning-circle"></i> <%= error %></div>
   <% } %>
-  
+
   <% if (typeof success !== 'undefined' && success) { %>
     <div class="alert alert-success"><i class="ph ph-check-circle"></i> <%= success %></div>
   <% } %>
@@ -31,6 +33,7 @@
 
     <div class="form-group">
       <label for="slug">Slug <span class="required">*</span></label>
+
       <div class="input-prefix-wrap">
         <span class="input-prefix">/docs/</span>
         <input type="text" id="slug" name="slug" value="<%= project.slug %>" required maxlength="80" pattern="[a-z0-9]+(?:-[a-z0-9]+)*">
@@ -51,4 +54,3 @@
     </div>
   </form>
 </div>
-

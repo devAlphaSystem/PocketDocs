@@ -12,21 +12,24 @@
 
     <div class="settings-application">
       <div class="settings-option-list">
-        <details class="settings-option-disclosure">
+        <details class="settings-option-disclosure" name="settings-options">
           <summary class="settings-option-row">
             <span><i class="ph ph-house"></i> Public site</span>
             <span class="settings-option-state">
               <i class="ph ph-caret-down settings-option-caret" aria-hidden="true"></i>
             </span>
           </summary>
+
           <div class="settings-option-body">
             <div class="settings-field-grid">
               <div class="form-group pb-form-field settings-icon-field">
                 <label for="siteIconFile">Icon</label>
+
                 <div class="settings-icon-control">
                   <span class="settings-icon-preview">
                     <img src="<%= siteIconUrl %>" alt="" data-site-icon-preview data-default-src="<%= assetUrl('/img/pd-logo.svg') %>">
                   </span>
+
                   <div class="settings-icon-actions">
                     <input type="file" id="siteIconFile" accept="image/svg+xml,image/png,image/jpeg,image/webp" data-site-icon-file>
                     <input type="hidden" id="siteIcon" name="siteIcon" value="" data-site-icon-value>
@@ -34,6 +37,7 @@
                     <button type="button" class="btn btn-outline btn-sm" data-site-icon-reset <%= hasCustomSiteIcon ? '' : 'hidden' %>>Use default icon</button>
                   </div>
                 </div>
+
                 <p class="form-hint">SVG, PNG, JPEG or WebP, up to 256 KB. Used in the browser tab, public header and homepage hero.</p>
               </div>
 
@@ -42,6 +46,7 @@
                 <textarea id="heroTitle" name="heroTitle" rows="2" required maxlength="200" placeholder="e.g. Acme **Docs**"><%= settings.heroTitle %></textarea>
                 <p class="form-hint">Supports inline Markdown such as <code>**bold**</code>, <code>*italic*</code>, links and inline code.</p>
               </div>
+
               <div class="form-group pb-form-field settings-markdown-field">
                 <label for="heroSubtitle">Subtitle</label>
                 <textarea id="heroSubtitle" name="heroSubtitle" rows="2" maxlength="300" placeholder="e.g. Documentation for **your team**."><%= settings.heroSubtitle %></textarea>
@@ -54,7 +59,7 @@
 
       <% if (canManageIpRestriction) { %>
         <div class="settings-option-list">
-          <details class="settings-option-disclosure">
+          <details class="settings-option-disclosure" name="settings-options">
             <summary class="settings-option-row">
               <span><i class="ph ph-shield-check"></i> Admin IP restriction</span>
               <span class="settings-option-state">
@@ -62,17 +67,12 @@
                 <i class="ph ph-caret-down settings-option-caret" aria-hidden="true"></i>
               </span>
             </summary>
+
             <div class="settings-option-body">
               <input type="hidden" id="ipEnabled" name="enabled" value="<%= ipRestriction.enabled %>">
               <label class="settings-toggle-row" for="ipEnabledToggle">
                 <span class="settings-switch">
-                  <input
-                    type="checkbox"
-                    id="ipEnabledToggle"
-                    role="switch"
-                    aria-checked="<%= ipRestriction.enabled === 'enable' ? 'true' : 'false' %>"
-                    data-value-target="ipEnabled"
-                    <%= ipRestriction.enabled === 'enable' ? 'checked' : '' %>>
+                  <input type="checkbox" id="ipEnabledToggle" role="switch" aria-checked="<%= ipRestriction.enabled === 'enable' ? 'true' : 'false' %>" data-value-target="ipEnabled" <%= ipRestriction.enabled === 'enable' ? 'checked' : '' %>>
                   <span class="settings-switch-track" aria-hidden="true"></span>
                 </span>
                 <span>Enable</span>
@@ -82,10 +82,14 @@
                 <label for="allowedIps">Allowed IPs</label>
                 <textarea id="allowedIps" name="allowedIps" rows="9" maxlength="5000" placeholder="e.g. 127.0.0.1&#10;192.168.1.100&#10;10.0.0.5"><%= ipRestriction.allowedIps %></textarea>
               </div>
+
               <div class="settings-field-hints">
                 <p class="form-hint">Enter one IP address per line. IPv4 and IPv6 are supported.</p>
+
                 <% if (detectedIp) { %>
-                  <p class="form-hint"><strong>Your current IP:</strong> <a href="#" id="insert-my-ip" data-ip="<%= detectedIp %>"><code><%= detectedIp %></code></a> — click to add to the list above.</p>
+                  <p class="form-hint"><strong>Your current IP:</strong> <a href="#" id="insert-my-ip" data-ip="<%= detectedIp %>">
+                      <code><%= detectedIp %></code>
+                    </a> — click to add to the list above.</p>
                 <% } %>
               </div>
             </div>

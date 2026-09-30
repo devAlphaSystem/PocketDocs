@@ -166,7 +166,9 @@ router.get("/:projectId/edit", csrfMiddleware, requireProjectAccess(ROLES.ADMIN)
 router.get("/:projectId/export", requireProjectAccess(ROLES.ADMIN), async (req, res, next) => {
   try {
     const data = await exportProject(req.params.projectId);
-    const downloadToken = String(req.query.downloadToken || "").trim().slice(0, 80);
+    const downloadToken = String(req.query.downloadToken || "")
+      .trim()
+      .slice(0, 80);
 
     if (downloadToken) {
       res.cookie(COOKIE_NAMES.DOWNLOAD_TOKEN, downloadToken, {

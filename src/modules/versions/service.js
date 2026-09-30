@@ -5,7 +5,11 @@ import { logger } from "../../lib/logger.js";
 import { clonePages } from "../pages/service.js";
 
 function generateSlug(label) {
-  return label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 120);
+  return label
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 120);
 }
 
 const LABEL_SUGGESTION_LIMIT = 5;

@@ -27,6 +27,7 @@
   <% if (versions.length > 0) { %>
     <div class="project-versions-section">
       <h2><%= t('Versions') %></h2>
+
       <div class="versions-grid">
         <% for (const ver of versions) { %>
           <a href="/docs/<%= project.slug %>/<%= ver.slug %>" class="version-tile">

@@ -5,7 +5,13 @@ const MARKDOWN_EXTENSION_PATTERN = /\.(?:md|markdown)$/i;
 const CONTROL_CHARS_PATTERN = /[\x00-\x1F\x7F]/;
 
 function displayFilename(filename) {
-  return String(filename || "").replace(/\\/g, "/").split("/").filter(Boolean).pop() || "Markdown file";
+  return (
+    String(filename || "")
+      .replace(/\\/g, "/")
+      .split("/")
+      .filter(Boolean)
+      .pop() || "Markdown file"
+  );
 }
 
 function stripMarkdownExtension(filename) {
@@ -14,7 +20,10 @@ function stripMarkdownExtension(filename) {
 
 function normalizeImportPath(filename) {
   const normalized = String(filename || "").replace(/\\/g, "/");
-  const segments = normalized.split("/").map((segment) => segment.trim()).filter(Boolean);
+  const segments = normalized
+    .split("/")
+    .map((segment) => segment.trim())
+    .filter(Boolean);
 
   if (segments.some((segment) => segment === "." || segment === "..")) {
     throw new ValidationError(`Invalid Markdown path: ${displayFilename(filename)}.`);
@@ -30,7 +39,15 @@ function getFilenameStem(filename) {
 }
 
 function cleanTitleText(value) {
-  return String(value || "").replace(/<!--[\s\S]*?-->/g, "").replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\[([^\]]+)\]\[[^\]]*\]/g, "$1").replace(/<[^>]+>/g, "").replace(/[`*_~]/g, "").replace(/\s+/g, " ").trim();
+  return String(value || "")
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/\[([^\]]+)\]\[[^\]]*\]/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .replace(/[`*_~]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function humanizeFilename(filename) {
@@ -41,7 +58,10 @@ function humanizeFilename(filename) {
 }
 
 function humanizePathSegment(segment) {
-  const title = stripMarkdownExtension(String(segment || "")).replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim();
+  const title = stripMarkdownExtension(String(segment || ""))
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
   if (!title) return "";
   return title.charAt(0).toUpperCase() + title.slice(1);
@@ -118,7 +138,14 @@ function isMarkdownImportFilename(filename) {
  * @returns {string} URL-safe slug.
  */
 function slugifyMarkdownImportValue(value) {
-  return String(value || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, MAX_SLUG_LENGTH).replace(/-+$/g, "");
+  return String(value || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, MAX_SLUG_LENGTH)
+    .replace(/-+$/g, "");
 }
 
 /**

@@ -126,12 +126,14 @@ export async function pbList(collection, params = {}) {
   await ensureAdminAuth();
   const start = Date.now();
   try {
-    const result = await getPb().collection(collection).getList(params.page || 1, params.perPage || 30, {
-      sort: params.sort,
-      filter: params.filter,
-      expand: params.expand,
-      fields: params.fields,
-    });
+    const result = await getPb()
+      .collection(collection)
+      .getList(params.page || 1, params.perPage || 30, {
+        sort: params.sort,
+        filter: params.filter,
+        expand: params.expand,
+        fields: params.fields,
+      });
     logger.debug("PocketBase query completed", { operation: "list", collection, duration_ms: Date.now() - start });
     return result;
   } catch (err) {

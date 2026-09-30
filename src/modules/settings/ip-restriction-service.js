@@ -18,7 +18,10 @@ let cached = null;
 let normalizedIpSet = null;
 
 function parseAllowedIps(value) {
-  return String(value || "").split(/[\r\n,]+/).map((entry) => entry.trim()).filter(Boolean);
+  return String(value || "")
+    .split(/[\r\n,]+/)
+    .map((entry) => entry.trim())
+    .filter(Boolean);
 }
 
 function normalizeAllowedIps(value) {

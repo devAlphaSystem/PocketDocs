@@ -5,6 +5,7 @@
     <div>
       <a href="/admin/projects/<%= project.id %>" class="back-link"><i class="ph ph-arrow-left"></i> Versions</a>
     </div>
+
     <div class="header-actions">
       <a href="/admin/projects/<%= project.id %>" class="btn btn-outline">Cancel</a>
       <button type="submit" form="version-create-form" class="btn btn-primary"><i class="ph ph-plus"></i> Create Version</button>
@@ -22,9 +23,11 @@
       <label for="label">Version label <span class="required">*</span></label>
       <input type="text" id="label" name="label" placeholder="v2.0, Beta, Latest..." required maxlength="50" value="<%= typeof formValues !== 'undefined' && formValues && formValues.label ? formValues.label : '' %>">
       <p class="form-hint">Freeform label: e.g. "v1.0", "2024.1", "Beta"</p>
+
       <% if (labelSuggestionOptions.length > 0) { %>
         <div class="version-label-suggestions" aria-label="Suggested version labels">
           <span class="version-label-suggestions-title">Suggested labels</span>
+
           <div class="version-label-suggestion-list">
             <% for (const suggestion of labelSuggestionOptions) { %>
               <button type="button" class="version-label-suggestion" data-fill-target="label" data-fill-value="<%= suggestion %>"><%= suggestion %></button>
@@ -51,6 +54,7 @@
             <option value="<%= v.id %>"<%= typeof formValues !== 'undefined' && formValues && formValues.clone_from === v.id ? ' selected' : '' %>><%= v.label %></option>
           <% } %>
         </select>
+
         <p class="form-hint">Clone all pages from another version to get a head start.</p>
       </div>
     <% } %>

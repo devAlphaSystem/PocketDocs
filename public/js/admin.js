@@ -24,7 +24,10 @@
   window.PocketDocs = window.PocketDocs || {};
 
   function slugify(value) {
-    return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    return String(value || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
   }
 
   window.PocketDocs.slugify = slugify;
@@ -467,12 +470,14 @@
       method: "GET",
       credentials: "same-origin",
       headers: { "X-Requested-With": "XMLHttpRequest" },
-    }).then(function (response) {
-      if (!response.ok) throw new Error("Request failed");
-      return response.text();
-    }).then(function (html) {
-      return new DOMParser().parseFromString(html, "text/html");
-    });
+    })
+      .then(function (response) {
+        if (!response.ok) throw new Error("Request failed");
+        return response.text();
+      })
+      .then(function (html) {
+        return new DOMParser().parseFromString(html, "text/html");
+      });
   }
 
   function openDrawer(url, title) {
@@ -490,13 +495,15 @@
     setOverlayScrollLock();
     adminDrawerPanel.focus();
 
-    fetchDrawerDocument(url).then(function (parsedDocument) {
-      if (requestId !== drawerRequestId) return;
-      return renderDrawerDocument(parsedDocument, title);
-    }).catch(function () {
-      if (requestId !== drawerRequestId) return;
-      showDrawerError(url);
-    });
+    fetchDrawerDocument(url)
+      .then(function (parsedDocument) {
+        if (requestId !== drawerRequestId) return;
+        return renderDrawerDocument(parsedDocument, title);
+      })
+      .catch(function () {
+        if (requestId !== drawerRequestId) return;
+        showDrawerError(url);
+      });
   }
 
   window.PocketDocs.openDrawer = openDrawer;
@@ -581,30 +588,33 @@
       body: body,
       credentials: "same-origin",
       headers: { "X-Requested-With": "XMLHttpRequest" },
-    }).then(function (response) {
-      if (response.redirected) {
-        window.location.href = response.url;
-        return null;
-      }
-      if (response.status === 204) {
-        window.location.reload();
-        return null;
-      }
-      return response.text().then(function (html) {
-        return {
-          response: response,
-          document: new DOMParser().parseFromString(html, "text/html"),
-        };
+    })
+      .then(function (response) {
+        if (response.redirected) {
+          window.location.href = response.url;
+          return null;
+        }
+        if (response.status === 204) {
+          window.location.reload();
+          return null;
+        }
+        return response.text().then(function (html) {
+          return {
+            response: response,
+            document: new DOMParser().parseFromString(html, "text/html"),
+          };
+        });
+      })
+      .then(function (result) {
+        if (!result) return;
+        return renderDrawerDocument(result.document, adminDrawerTitle.textContent);
+      })
+      .catch(function () {
+        if (submitter) submitter.disabled = false;
+        if (typeof window.showToast === "function") {
+          window.showToast("Unable to save changes. Please try again.", "error");
+        }
       });
-    }).then(function (result) {
-      if (!result) return;
-      return renderDrawerDocument(result.document, adminDrawerTitle.textContent);
-    }).catch(function () {
-      if (submitter) submitter.disabled = false;
-      if (typeof window.showToast === "function") {
-        window.showToast("Unable to save changes. Please try again.", "error");
-      }
-    });
   });
 
   var modal = document.getElementById("adminModal");
