@@ -10,8 +10,22 @@
 
     <% while (groupEnd < sidebarNodes.length && sidebarNodes[groupEnd].item_type !== 'header') { groupEnd += 1; } %>
 
+    <%
+      const groupNodes = sidebarNodes.slice(index + 1, groupEnd);
+      const pendingNodes = activePage ? [...groupNodes] : [];
+      let groupHasActivePage = false;
+
+      while (pendingNodes.length > 0 && !groupHasActivePage) {
+        const groupNode = pendingNodes.pop();
+        groupHasActivePage = groupNode.id === activePage.id;
+        if (!groupHasActivePage && groupNode.children && groupNode.children.length > 0) {
+          pendingNodes.push(...groupNode.children);
+        }
+      }
+    %>
+
     <li class="docs-nav-group" data-depth="<%= depth %>" style="--nav-indent: <%= depth * 16 %>px">
-      <details<%= node.collapsed_by_default ? '' : ' open' %>>
+      <details<%= !node.collapsed_by_default || groupHasActivePage ? ' open' : '' %>>
       <summary class="docs-nav-heading">
         <span dir="auto"><%= node.title %></span>
         <i class="ph ph-caret-down" aria-hidden="true"></i>
@@ -19,7 +33,7 @@
 
       <ul class="docs-nav-group-items">
         <%- include('./docs-sidebar-item', {
-            nodes: sidebarNodes.slice(index + 1, groupEnd),
+            nodes: groupNodes,
             depth,
             project,
             version,
