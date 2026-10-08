@@ -8,7 +8,6 @@
   var submitButton = dialog.querySelector("[data-markdown-import-submit]");
   var summary = dialog.querySelector("[data-markdown-import-summary]");
   var fileList = dialog.querySelector("[data-markdown-import-file-list]");
-  var errorBox = dialog.querySelector("[data-markdown-import-error]");
   var closeButtons = dialog.querySelectorAll("[data-markdown-import-close]");
   var importUrl = dialog.getAttribute("data-import-url") || "";
   var pageEditorBaseUrl = dialog.getAttribute("data-page-editor-base-url") || "";
@@ -18,28 +17,6 @@
   var selectedFiles = [];
   var selectedInput = null;
   var importing = false;
-
-  function setError(message) {
-    if (!errorBox) return;
-    errorBox.textContent = message || "";
-    if (message) {
-      errorBox.removeAttribute("hidden");
-    } else {
-      errorBox.setAttribute("hidden", "");
-    }
-  }
-
-  function showError(title, message) {
-    if (typeof window.showAlert === "function") {
-      window.showAlert({
-        title: title || "Import failed",
-        message: message || "We couldn't import the selected Markdown files.",
-        confirmText: "Close",
-      });
-      return;
-    }
-    setError(message || "We couldn't import the selected Markdown files.");
-  }
 
   function formatBytes(bytes) {
     if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
@@ -111,7 +88,6 @@
       clearChildren(fileList);
       fileList.setAttribute("hidden", "");
     }
-    setError("");
   }
 
   function closeDialog() {
@@ -257,7 +233,7 @@
         : files;
 
       var errorMessage = validateSelectedFiles(selectedFiles);
-      setError(errorMessage);
+      if (errorMessage) window.showToast(errorMessage, "error");
       renderFileList(selectedFiles);
       if (submitButton) {
         submitButton.disabled = Boolean(errorMessage) || selectedFiles.length === 0;
@@ -271,12 +247,11 @@
 
     var errorMessage = validateSelectedFiles(selectedFiles);
     if (errorMessage) {
-      setError(errorMessage);
+      window.showToast(errorMessage, "error");
       return;
     }
 
     importing = true;
-    setError("");
     if (submitButton) {
       submitButton.disabled = true;
       submitButton.setAttribute("aria-busy", "true");
@@ -321,7 +296,7 @@
       if (typeof window.hideModal === "function") {
         window.hideModal();
       }
-      showError("Import failed", error.message);
+      window.showToast(error.message, "error");
     }
   });
 })();

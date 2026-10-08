@@ -29,7 +29,7 @@
     <link rel="icon" type="image/svg+xml" href="/img/pd-logo.svg">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-    <link rel="stylesheet" href="<%= assetUrl('/css/design-system.css') %>">
+    <link rel="stylesheet" href="<%= assetUrl('/css/shared.css') %>">
     <link rel="stylesheet" href="<%= assetUrl('/css/admin.css') %>">
   </head>
 
@@ -40,13 +40,6 @@
           <img src="<%= assetUrl('/img/pd-logo.svg') %>" alt="" class="auth-logo">
           <h1>Superuser login</h1>
         </header>
-
-        <% if (typeof error !== 'undefined' && error) { %>
-          <div class="alert alert-error">
-            <i class="ph ph-warning-circle"></i>
-            <span><%= error %></span>
-          </div>
-        <% } %>
 
         <form method="POST" action="/auth/login" class="auth-form" novalidate>
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -76,6 +69,10 @@
       </div>
     </main>
     
+    <%- include('../partials/toast') %>
+
+    <script src="<%= assetUrl('/js/toast.js') %>"></script>
+
     <script src="<%= assetUrl('/js/theme-toggle.js') %>"></script>
 
     <script src="<%= assetUrl('/js/auth.js') %>"></script>

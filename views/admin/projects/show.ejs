@@ -9,10 +9,6 @@
 <% const _versions = typeof versions !== 'undefined' ? versions : []; %>
 
 <div class="project-detail">
-  <% if (typeof success !== 'undefined' && success) { %>
-    <div class="alert alert-success"><i class="ph ph-check-circle"></i> <%= success %></div>
-  <% } %>
-
   <% if (_singleVersionMode) { %>
     <% if (!_defaultVersion) { %>
       <div class="empty-state small">

@@ -32,7 +32,7 @@
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-    <link rel="stylesheet" href="<%= assetUrl('/css/design-system.css') %>">
+    <link rel="stylesheet" href="<%= assetUrl('/css/shared.css') %>">
     <link rel="stylesheet" href="<%= assetUrl('/css/admin.css') %>">
 
     <% for (const href of normalizeViewAssetList(typeof extraCss !== 'undefined' ? extraCss : null)) { %>
@@ -200,6 +200,8 @@
     <script defer src="<%= assetUrl('/js/custom-select.js') %>"></script>
 
     <script defer src="<%= assetUrl('/js/swipe-sidebar.js') %>"></script>
+
+    <script defer src="<%= assetUrl('/js/toast.js') %>"></script>
 
     <script defer src="<%= assetUrl('/js/admin.js') %>"></script>
 

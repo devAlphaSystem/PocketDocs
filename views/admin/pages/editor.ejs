@@ -46,14 +46,6 @@
     </div>
   </div>
 
-  <% if (typeof error !== 'undefined' && error) { %>
-    <div class="alert alert-error"><i class="ph ph-warning-circle"></i> <%= error %></div>
-  <% } %>
-
-  <% if (typeof success !== 'undefined' && success) { %>
-    <div class="alert alert-success"><i class="ph ph-check-circle"></i> <%= success %></div>
-  <% } %>
-
   <form id="pageForm" method="POST" action="<%= typeof page !== 'undefined' && page ? '/admin/projects/' + project.id + '/versions/' + version.id + '/pages/' + page.id : '/admin/projects/' + project.id + '/versions/' + version.id + '/pages/new?section=' + section %>" class="editor-form" novalidate<% if (supportsSidebarItems) { %> data-content-item-create-form<% } %>>
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <input type="hidden" name="section" value="<%= section %>">

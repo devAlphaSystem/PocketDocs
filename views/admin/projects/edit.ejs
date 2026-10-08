@@ -15,14 +15,6 @@
     </div>
   </div>
 
-  <% if (typeof error !== 'undefined' && error) { %>
-    <div class="alert alert-error"><i class="ph ph-warning-circle"></i> <%= error %></div>
-  <% } %>
-
-  <% if (typeof success !== 'undefined' && success) { %>
-    <div class="alert alert-success"><i class="ph ph-check-circle"></i> <%= success %></div>
-  <% } %>
-
   <form method="POST" action="/admin/projects/<%= project.id %>" novalidate id="project-edit-form">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 

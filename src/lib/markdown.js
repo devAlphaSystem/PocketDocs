@@ -57,10 +57,15 @@ const sanitizeOptions = {
     h5: ["id"],
     h6: ["id"],
     input: ["type", "checked", "disabled"],
+    details: ["class", "open", "name"],
   },
   allowedSchemes: ["http", "https", "mailto"],
   transformTags: {
     a: transformLink,
+    details: (tagName, attribs) => ({
+      tagName,
+      attribs: { ...attribs, class: "accordion" },
+    }),
   },
 };
 

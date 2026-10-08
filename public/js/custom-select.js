@@ -53,26 +53,6 @@
     var buttons = [];
 
     Array.prototype.forEach.call(select.children, function (child) {
-      if (child.tagName === "OPTGROUP") {
-        var group = document.createElement("div");
-        group.className = "select-enhanced-group";
-
-        var groupLabel = document.createElement("div");
-        groupLabel.className = "select-enhanced-group-label";
-        groupLabel.textContent = child.label;
-        group.appendChild(groupLabel);
-
-        Array.prototype.forEach.call(child.children, function (option) {
-          if (option.tagName !== "OPTION") return;
-          var optionButton = createOptionButton(option, buttons.length, selectId);
-          group.appendChild(optionButton);
-          buttons.push(optionButton);
-        });
-
-        listbox.appendChild(group);
-        return;
-      }
-
       if (child.tagName !== "OPTION") return;
       var optionButton = createOptionButton(child, buttons.length, selectId);
       listbox.appendChild(optionButton);
@@ -96,7 +76,6 @@
 
     var wrapper = document.createElement("div");
     wrapper.className = "select-enhanced";
-    if (select.classList.contains("select-sm")) wrapper.classList.add("select-enhanced-sm");
 
     var button = document.createElement("button");
     button.type = "button";
